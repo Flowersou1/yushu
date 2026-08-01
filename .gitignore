@@ -1,0 +1,43 @@
+# === 第三方仓库（组员自己 clone）===
+unitree_mujoco/
+unitree_sdk2/
+g1-mechdance-main/
+# === 版权模型（注册才能用、禁止再分发）===
+SMPL_python_v.1.0.0/
+models_smplx_v1_1/
+# === MuJoCo 二进制/示例（官方有下）===
+bin/
+lib/
+include/
+simulate/
+model/
+sample/
+# === 视频/图片/内部文档/数据 ===
+*.mp4
+*.docx
+微信视频*
+怎么启动我.txt
+g1_dance/*.png
+g1_dance/*.npz
+g1_dance/models/
+g1_dance/out/
+# === Python 缓存/虚拟环境 ===
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+# === 日志/备份 ===
+*.bak
+*.log
+MUJOCO_LOG.TXT
+play_log.txt
+# === 内部笔记（不公开）===
+CLAUDE.md
+# === 系统/编辑器 ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
