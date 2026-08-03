@@ -85,6 +85,9 @@ class App:
         tk.Button(right, text="保存关键帧(JSON)", font=f, command=self.save_kf_json).pack(fill=tk.X, pady=1)
         tk.Button(right, text="📂 导入CSV(测试已有)", font=f, command=self.import_csv).pack(fill=tk.X, pady=1)
         tk.Button(right, text="➕ 追加关键帧(合并)", font=f, command=self.append_kf_json).pack(fill=tk.X, pady=1)
+        tk.Button(right, text="➕ 追加CSV(合并)", font=f, command=self.append_csv).pack(fill=tk.X, pady=1)
+        self.coarse_var = tk.IntVar()
+        tk.Checkbutton(right, text="精简导出(每秒1帧)", font=f, variable=self.coarse_var).pack(anchor='w', pady=1)
         tk.Button(right, text="💾 导出CSV(训练)", font=f, command=self.export_csv).pack(fill=tk.X, pady=1)
         ttk.Separator(right).pack(fill=tk.X, pady=4)
         tk.Label(right, text="▼ 局部重置", font=f).pack(anchor='w')
@@ -163,6 +166,17 @@ class App:
         self.keyframes.sort(key=lambda x: x[0]); self.refresh_list()
         messagebox.showinfo("追加完成", f"追加 {len(data_in)} 个关键帧, 起始 t={start_t:.1f}s\n总共 {len(self.keyframes)} 个关键帧")
 
+    def append_csv(self):
+        """追加一个CSV(密集帧)到当前末尾, 用于合并多段CSV。"""
+        path = filedialog.askopenfilename(initialdir=HERE, filetypes=[('CSV','*.csv')], title="追加CSV(合并)")
+        if not path: return
+        try: arr = np.loadtxt(path, delimiter=',')
+        except Exception as e: messagebox.showerror("失败", str(e)); return
+        start_t = (max(t for t,_,_ in self.keyframes) + 0.5) if self.keyframes else 0.0
+        self.keyframes += self._csv_to_kfs(arr, start_t)
+        self.keyframes.sort(key=lambda x: x[0]); self.refresh_list()
+        messagebox.showinfo("追加完成", f"追加 {len(arr)} 帧, 起始 t={start_t:.1f}s\n总共 {len(self.keyframes)} 帧")
+
     # --- CSV ---
     def _csv_to_kfs(self, arr, start_t=0.0):
         kfs = []
@@ -202,8 +216,9 @@ class App:
                     return ([p0[n]+(p1[n]-p0[n])*a for n,_,_,_ in JOINTS],
                             [r0[k]+(r1[k]-r0[k])*a for k in range(7)])
             return ([kfs[-1][1][n] for n,_,_,_ in JOINTS], kfs[-1][2])
+        step = FPS if self.coarse_var.get() else 1
         rows = []
-        for fi_n in range(int(dur*FPS)+1):
+        for fi_n in range(0, int(dur*FPS)+1, step):
             pose_deg, root = interp(fi_n/FPS); rads = np.radians(pose_deg)
             rows.append([root[0],root[1],root[2], root[4],root[5],root[6],root[3]] + list(rads))
         np.savetxt(path, np.array(rows), delimiter=',', fmt='%.5f')
