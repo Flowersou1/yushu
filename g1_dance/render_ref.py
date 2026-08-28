@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-"""把任意 mjlab CSV 参考动作渲染成视频 + 关键帧PNG。纯 Windows mujoco。
+"""把任意 mjlab CSV 参考动作渲染成视频 + 关键帧PNG。
 用法: python render_ref.py [csv路径] [输出mp4路径] [方位角azimuth] [每帧重复(>1=慢放)]
 默认: test.csv -> test_ref.mp4, az=270(侧)。az=0为正面。"""
 import os, sys, numpy as np, mujoco, cv2
 
-WS = r'C:\Users\24668\Desktop\mujoco-3.10.0-windows-x86_64'
-CSV = sys.argv[1] if len(sys.argv) > 1 else os.path.join(WS, 'g1_dance', 'test.csv')
-OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(WS, 'g1_dance', 'test_ref.mp4')
+HERE = os.path.dirname(os.path.abspath(__file__))
+WS = os.path.dirname(HERE)
+CSV = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'test.csv')
+OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, 'test_ref.mp4')
 AZ = float(sys.argv[3]) if len(sys.argv) > 3 else 270.0
 REPEAT = int(sys.argv[4]) if len(sys.argv) > 4 else 1
 SNAPS = {0.16, 0.44, 0.78}   # 抱架/左拳峰/右拳峰 (3.2s)
