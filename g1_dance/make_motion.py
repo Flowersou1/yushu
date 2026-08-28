@@ -7,8 +7,8 @@
 臂: shoulder_pitch,shoulder_roll,shoulder_yaw,elbow,wrist_roll,wrist_pitch,wrist_yaw"""
 import os, numpy as np
 
-WS = r'C:\Users\24668\Desktop\mujoco-3.10.0-windows-x86_64'
-OUT = os.path.join(WS, 'g1_dance', 'routine.csv')
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, 'routine.csv')
 
 LEG = [-0.312, 0.0, 0.0, 0.669, -0.363, 0.0]   # 稳定站立, 全程不变
 Z = 0.76

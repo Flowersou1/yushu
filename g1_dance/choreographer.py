@@ -74,7 +74,6 @@ class App:
         canv.bind_all('<MouseWheel>', lambda e: canv.yview_scroll(int(-e.delta/120),'units'))
         root.bind('<space>', lambda e: self.toggle_play())
 
-        # 右面板
         f = self.rfont
         tk.Label(right, text="时间(秒):", font=f).pack(anchor='w')
         self.t_entry = tk.Entry(right, font=f); self.t_entry.insert(0,'0.0'); self.t_entry.pack(fill=tk.X)
@@ -107,7 +106,6 @@ class App:
         self.viewer = mujoco.viewer.launch_passive(model, data)
         self.update_loop()
 
-    # --- 滑块 ---
     def on_slide(self, name, v): self.val_lbls[name].config(text=f'{float(v):.0f}°')
     def reset_one(self, name): self.sliders[name].set(0.0); self.val_lbls[name].config(text='0°')
     def apply_subset(self, preset, groups):
@@ -124,7 +122,6 @@ class App:
         for n,_,_,_ in JOINTS: self.sliders[n].set(pose.get(n,0.0))
         self.write_qpos(pose, root)
 
-    # --- 关键帧 ---
     def save_kf(self):
         try: t = float(self.t_entry.get())
         except: t = 0.0
@@ -137,7 +134,6 @@ class App:
         self.kf_list.delete('1.0', tk.END)
         for t,_,_ in self.keyframes: self.kf_list.insert(tk.END, f"t={t:.2f}s\n")
 
-    # --- JSON 关键帧(稀疏无损) ---
     def save_kf_json(self):
         path = filedialog.asksaveasfilename(initialdir=HERE, defaultextension='.json', filetypes=[('JSON','*.json')], title="保存关键帧")
         if not path: return
@@ -166,18 +162,6 @@ class App:
         self.keyframes.sort(key=lambda x: x[0]); self.refresh_list()
         messagebox.showinfo("追加完成", f"追加 {len(data_in)} 个关键帧, 起始 t={start_t:.1f}s\n总共 {len(self.keyframes)} 个关键帧")
 
-    def append_csv(self):
-        """追加一个CSV(密集帧)到当前末尾, 用于合并多段CSV。"""
-        path = filedialog.askopenfilename(initialdir=HERE, filetypes=[('CSV','*.csv')], title="追加CSV(合并)")
-        if not path: return
-        try: arr = np.loadtxt(path, delimiter=',')
-        except Exception as e: messagebox.showerror("失败", str(e)); return
-        start_t = (max(t for t,_,_ in self.keyframes) + 0.5) if self.keyframes else 0.0
-        self.keyframes += self._csv_to_kfs(arr, start_t)
-        self.keyframes.sort(key=lambda x: x[0]); self.refresh_list()
-        messagebox.showinfo("追加完成", f"追加 {len(arr)} 帧, 起始 t={start_t:.1f}s\n总共 {len(self.keyframes)} 帧")
-
-    # --- CSV ---
     def _csv_to_kfs(self, arr, start_t=0.0):
         kfs = []
         for i, row in enumerate(arr):
@@ -224,7 +208,6 @@ class App:
         np.savetxt(path, np.array(rows), delimiter=',', fmt='%.5f')
         messagebox.showinfo("完成", f"导出 {len(rows)} 帧 @ {FPS}fps → {os.path.basename(path)}")
 
-    # --- 播放(暂停/停止) ---
     def toggle_play(self):
         if not self.playing:
             if len(self.keyframes) < 2: messagebox.showwarning("提示","至少 2 个关键帧"); return
