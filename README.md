@@ -5,19 +5,22 @@
 
 ---
 
-## 仓库里有什么（已包含）
+## 仓库里有什么
 - `g1/` —— G1 机器人模型（`scene_29dof.xml` + 网格，29 自由度）。**编动作/仿真都靠它。**
-- `g1_dance/` —— 我们写的工具：
+- `g1_dance/` —— 编动作与验证工具：
   - `choreographer.py` —— **动作编辑器 GUI**（拖滑块摆姿势、实时预览、存关键帧、导出 CSV）。组员编动作用这个。
   - `combine_routines.py` —— 把多人编的 CSV 拼成全套。
-  - `make_motion.py` / `make_motion_test.py` —— 关键帧脚本（备选，纯代码编）。
+  - `make_motion.py` / `make_motion_test.py` —— 关键帧脚本（备选，纯代码编；分别写 `routine.csv` / `test.csv`）。
   - `check_clip.py` —— 用 MuJoCo 碰撞检测**逐帧查穿模**（判穿模只信它）。
   - `verify_csv.py` / `elbow_diag.py` —— 查关节坐标/肘内角（判动作对错的权威方法）。
   - `render_ref.py` —— 渲染参考动作视频。
+  - `hang_sim.py` —— 虚拟吊装 + PD 跟踪 `routine.csv`（不靠平衡器，先看动作能不能带物理地动）。
   - `组员编动作说明.md` —— **组员看这个上手编动作**。
+  - `技术要点.md` —— 关节约定、防穿模、踩坑记录（改动作前必看）。
   - `routine.csv` —— 已编好的拳法 routine（零穿模、肘真伸直，可作保底/示例）。
-- `CLAUDE.md` —— 项目完整背景、关节约定、踩过的坑（改动作前必看）。
+  - `test.csv` —— 短直拳测试片段（`check_clip` / `verify_csv` 默认输入）。
 - `团队教程_从零跑通G1武术仿真.md` —— 完整管线教程（环境/训练/部署）。
+- `g1-mechdance_指南.md` / `unitree_sdk2_guide.md` —— 相邻第三方工具说明（本仓库不内嵌那些代码）。
 
 ## ❗ 不在仓库里、需要自己下载的（按需）
 
@@ -46,8 +49,8 @@ pip install mujoco
 ## 快速开始：编一段动作（组员）
 
 1. `pip install mujoco`
-2. `python g1_dance\choreographer.py` —— 拖滑块摆姿势、存关键帧、导出 CSV。
-3. 详细看 **`g1_dance\组员编动作说明.md`**。
+2. `python g1_dance/choreographer.py` —— 拖滑块摆姿势、存关键帧、导出 CSV。
+3. 详细看 **`g1_dance/组员编动作说明.md`**。
 
 ## 完整管线（负责人）
 
@@ -68,7 +71,7 @@ play 仿真验证 → 吊装低速上真机
 ---
 
 ## G1 关节约定（改动作必看，否则白训）
-详见 `CLAUDE.md`。要点（实测，别猜符号）：
+详见 `g1_dance/技术要点.md`。要点（实测，别猜符号）：
 - `shoulder_pitch`：**正值=手臂下垂**；**负值=前抬/上举**（-0.74≈正前方水平）。
 - `elbow`：⚠️ **手臂伸直 ≈ +1.3~1.5（正值）**，不是 0；elbow=0 只是 90° 直角。
 - 抱架肘弯不能深于 -1.0（会穿模）。

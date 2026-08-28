@@ -21,6 +21,7 @@ g1_dance/*.png
 g1_dance/*.npz
 g1_dance/models/
 g1_dance/out/
+g1_dance/video_frames/
 # === Python 缓存/虚拟环境 ===
 __pycache__/
 *.pyc
