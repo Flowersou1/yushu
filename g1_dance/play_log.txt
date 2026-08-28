@@ -1,7 +1,0 @@
-╭─ Unrecognized options ───────────────────────────────────────────────────────╮
-│ Unrecognized options: --env.commands.motion.motion-file,                     │
-│ /root/g1_spinkick_example/motions/routine.npz                                │
-│ ──────────────────────────────────────────────────────────────────────────── │
-│ For full helptext, run /root/g1_spinkick_example/.venv/bin/play              │
-│ Mjlab-Tracking-Flat-Unitree-G1 --help                                        │
-╰──────────────────────────────────────────────────────────────────────────────╯
