@@ -4,7 +4,7 @@
 
 - `unitree_sdk2_python/example/g1/low_level/g1_low_level_example.py`
 - `unitree_sdk2_python/example/g1/high_level/g1_arm7_sdk_dds_example.py`
-- `g1_dance_studio/assets/g1/g1_joint_index_dds.md`
+- `g1/g1_joint_index_dds.md`（仓库根目录，两条线共用）
 - 文档中心「基础运动开发」页面（网络受限时以 SDK 示例为准）
 
 在线文档：  

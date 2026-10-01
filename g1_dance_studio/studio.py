@@ -81,6 +81,8 @@ class DanceStudioApp:
         self.base_dir = app_base_dir()
         self.config_path = os.path.join(self.base_dir, "config", "robot_g1_29dof.yaml")
         self.xml_path = os.path.join(self.base_dir, "assets", "g1", "scene_29dof.xml")
+        if not os.path.isfile(self.xml_path):  # 仓库布局：模型在根目录 g1/（打包版仍用内置 assets）
+            self.xml_path = os.path.join(os.path.dirname(self.base_dir), "g1", "scene_29dof.xml")
         self.dances_dir = os.path.join(self.base_dir, "dances")
         self.exports_dir = os.path.join(self.base_dir, "exports")
         os.makedirs(self.dances_dir, exist_ok=True)

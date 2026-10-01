@@ -25,6 +25,8 @@ def main():
     # 3. 连接仿真器
     # 对于 Windows 用户，宇树官方 SDK 安装困难，我们使用直接调用 MuJoCo API 的后端
     xml_path = os.path.join(base_dir, "assets", "g1", "scene_29dof.xml")
+    if not os.path.isfile(xml_path):  # 仓库布局：模型在根目录 g1/（打包版仍用内置 assets）
+        xml_path = os.path.join(os.path.dirname(base_dir), "g1", "scene_29dof.xml")
     backend = MujocoNativeBackend(xml_path=xml_path, dt=dt)
     # 关闭虚拟挂带，进行真实的物理平衡倒地测试
     backend.use_virtual_wire = False

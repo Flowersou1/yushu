@@ -226,6 +226,8 @@ def main():
         
     config_path = os.path.join(base_dir, "config", "robot_g1_29dof.yaml")
     xml_path = os.path.join(base_dir, "assets", "g1", "scene_29dof.xml")
+    if not os.path.isfile(xml_path):  # 仓库布局：模型在根目录 g1/（打包版仍用内置 assets）
+        xml_path = os.path.join(os.path.dirname(base_dir), "g1", "scene_29dof.xml")
     
     joint_map = JointMap(config_path)
     # 使用锚定物理模式 (anchored_physics)，开启物理引擎与碰撞，但锁死机器人底盘使其悬浮固定

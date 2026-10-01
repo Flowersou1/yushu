@@ -4,7 +4,7 @@ Official Unitree G1 constants aligned with unitree_sdk2_python examples.
 Sources (local checkout under unitree_sdk2_python/example/g1/):
   - low_level/g1_low_level_example.py
   - high_level/g1_arm7_sdk_dds_example.py
-  - assets/g1/g1_joint_index_dds.md (29 DoF motor order)
+  - g1/g1_joint_index_dds.md (29 DoF motor order, repo root)
 
 IDL: unitree_hg (G1 / H1-2). Go2 uses unitree_go — do not mix.
 """

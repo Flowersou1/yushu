@@ -34,8 +34,9 @@
 | 平台 | MuJoCo + 官方 unitree_mujoco 环境 | Windows + `pip install mujoco pyyaml` 即可 |
 | 校验 | check_clip.py 碰撞检测 / verify_csv / hang_sim | 内置多模式仿真预览（锁骨盆/挂带/物理） |
 
-两条线共用同一套官方关节序（G1JointIndex 0–28）；`g1/` 与 `g1_dance_studio/assets/g1/`
-是同一份官方模型。注意两边 CSV 列格式不同（编辑器的含根轨迹、Studio 的含表头），
+两条线共用同一套官方关节序（G1JointIndex 0–28）和同一份官方模型（`g1_dance_studio`
+直接引用根目录 `g1/`；单独拷出该文件夹使用时需一并带上模型）。
+注意两边 CSV 列格式不同（编辑器的含根轨迹、Studio 的含表头），
 暂不能直接互相套用校验脚本。
 
 ## 新组员上手顺序

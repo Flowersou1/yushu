@@ -82,6 +82,6 @@ g1_dance_studio/
   config/                # 关节索引
   dances/                # 动作 YAML
   exports/               # 导出目录（自动创建）
-  assets/g1/             # MJCF + 网格
+  （MuJoCo 模型用仓库根 ../g1/，打包 exe 时自动内置）
   src/                   # joint_map / trajectory / backend
 ```
