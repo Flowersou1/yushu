@@ -1,0 +1,62 @@
+
+  - time: 1.00  # <--- 【左弓步】 请在此修改对应时间
+    joints:
+      left_hip_pitch: -1.215
+      left_knee: 1.182
+      right_hip_pitch: 1.080
+      right_hip_roll: -0.101
+      right_hip_yaw: 0.068
+      right_knee: -0.101
+      right_ankle_pitch: -0.743
+      right_ankle_roll: -0.034
+      waist_yaw: 0.135
+      waist_pitch: 0.169
+      left_shoulder_pitch: -0.810
+      left_shoulder_yaw: -0.203
+      left_elbow: 0.304
+      left_wrist_roll: 0.979
+      left_wrist_pitch: -1.351
+      left_wrist_yaw: 0.338
+      right_shoulder_pitch: -0.709
+      right_shoulder_roll: 0.068
+      right_shoulder_yaw: 0.506
+      right_elbow: -0.135
+      right_wrist_roll: -0.912
+      right_wrist_pitch: 0.068
+      right_wrist_yaw: -0.642
+
+
+  - time: 3.00  # <--- 【右弓步】 请在此修改对应时间
+    joints:
+      left_hip_pitch: 1.047
+      left_hip_roll: 0.135
+      left_hip_yaw: 0.068
+      left_knee: -0.101
+      left_ankle_pitch: -0.912
+      left_ankle_roll: 0.068
+      right_hip_pitch: -1.384
+      right_hip_roll: -0.101
+      right_hip_yaw: -0.034
+      right_knee: 1.452
+      right_ankle_pitch: 0.068
+      right_ankle_roll: 0.034
+      waist_yaw: -0.236
+      waist_roll: 0.034
+      waist_pitch: 0.068
+
+  - time: 5.00  # <--- 【马步】 请在此修改对应时间
+    joints:
+      left_hip_pitch: -1.080
+      left_hip_roll: 0.675
+      left_hip_yaw: -0.135
+      left_knee: 1.654
+      left_ankle_pitch: -0.540
+      left_ankle_roll: -0.270
+      right_hip_pitch: -1.047
+      right_hip_roll: -0.675
+      right_hip_yaw: 0.169
+      right_knee: 1.654
+      right_ankle_pitch: -0.608
+      right_ankle_roll: 0.236
+      waist_pitch: 0.270
+

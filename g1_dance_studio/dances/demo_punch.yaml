@@ -1,0 +1,47 @@
+meta:
+  robot: g1_29dof
+  angle_unit: rad
+  time_unit: s
+  control_hz: 100
+  note: 极简上半身演示——蓄力、出拳、收回
+keyframes:
+  - time: 0.0
+    name: 起势
+    joints:
+      left_shoulder_pitch: 0.0
+      left_shoulder_roll: 0.0
+      left_elbow: 0.0
+      right_shoulder_pitch: 0.0
+      right_shoulder_roll: 0.0
+      right_elbow: 0.0
+      waist_yaw: 0.0
+  - time: 2.0
+    name: 蓄力
+    joints:
+      right_shoulder_pitch: -0.5
+      right_elbow: 1.0
+      waist_yaw: -0.2
+  - time: 2.5
+    name: 出拳
+    joints:
+      left_shoulder_pitch: -0.2
+      left_shoulder_roll: 0.1
+      right_shoulder_pitch: -1.0
+      right_elbow: 0.1
+      waist_yaw: 0.3
+  - time: 3.5
+    name: 收拳
+    joints:
+      right_shoulder_pitch: -0.5
+      right_elbow: 1.0
+      waist_yaw: 0.0
+  - time: 5.0
+    name: 回零
+    joints:
+      left_shoulder_pitch: 0.0
+      left_shoulder_roll: 0.0
+      left_elbow: 0.0
+      right_shoulder_pitch: 0.0
+      right_shoulder_roll: 0.0
+      right_elbow: 0.0
+      waist_yaw: 0.0

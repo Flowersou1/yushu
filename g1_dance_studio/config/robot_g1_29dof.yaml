@@ -1,0 +1,74 @@
+# G1 29 DoF joint map — MUST match official unitree_hg LowCmd motor order.
+# Source: unitree_sdk2_python example G1JointIndex + g1_joint_index_dds.md
+#
+# Control paths (official):
+#   arm_sdk  -> topic rt/arm_sdk  , dt=0.02,  enable via motor_cmd[29].q=1
+#              joints: waist(12-14) + arms(15-28); legs owned by loco
+#   lowcmd   -> topic rt/lowcmd   , dt=0.002, ReleaseMode first; full body
+#              per-joint kp/kd from g1_low_level_example.py
+
+meta:
+  robot: g1
+  dof: 29
+  idl: unitree_hg
+  angle_unit: rad
+  official_sources:
+    - example/g1/low_level/g1_low_level_example.py
+    - example/g1/high_level/g1_arm7_sdk_dds_example.py
+    - g1_joint_index_dds.md
+
+joints:
+  # Legs (12) — LowCmd indices 0-11
+  left_hip_pitch: 0
+  left_hip_roll: 1
+  left_hip_yaw: 2
+  left_knee: 3
+  left_ankle_pitch: 4   # PR mode; AB mode alias LeftAnkleB
+  left_ankle_roll: 5    # PR mode; AB mode alias LeftAnkleA
+  right_hip_pitch: 6
+  right_hip_roll: 7
+  right_hip_yaw: 8
+  right_knee: 9
+  right_ankle_pitch: 10
+  right_ankle_roll: 11
+  # Waist (3) — 12-14; roll/pitch invalid if waist locked
+  waist_yaw: 12
+  waist_roll: 13
+  waist_pitch: 14
+  # Left arm (7) — 15-21
+  left_shoulder_pitch: 15
+  left_shoulder_roll: 16
+  left_shoulder_yaw: 17
+  left_elbow: 18
+  left_wrist_roll: 19
+  left_wrist_pitch: 20
+  left_wrist_yaw: 21
+  # Right arm (7) — 22-28
+  right_shoulder_pitch: 22
+  right_shoulder_roll: 23
+  right_shoulder_yaw: 24
+  right_elbow: 25
+  right_wrist_roll: 26
+  right_wrist_pitch: 27
+  right_wrist_yaw: 28
+
+# Official low-level PD (g1_low_level_example.py)
+kp_low_level: [60, 60, 60, 100, 40, 40, 60, 60, 60, 100, 40, 40, 60, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+kd_low_level: [1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+# Official arm SDK PD (g1_arm7_sdk_dds_example.py)
+kp_arm_sdk: 60.0
+kd_arm_sdk: 1.5
+
+control:
+  recommended_path_for_dance: arm_sdk
+  arm_sdk_topic: rt/arm_sdk
+  lowcmd_topic: rt/lowcmd
+  lowstate_topic: rt/lowstate
+  arm_sdk_dt: 0.02
+  lowcmd_dt: 0.002
+  arm_sdk_enable_index: 29
+
+limits:
+  velocity_scale: 0.2
+  acceleration_scale: 0.2
