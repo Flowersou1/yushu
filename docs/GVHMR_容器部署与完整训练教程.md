@@ -1,8 +1,8 @@
-# Unitree G1 动作模仿： GVHMR 容器部署 + 完整训练教程
+﻿# Unitree G1 动作模仿： GVHMR 容器部署 + 完整训练教程
 
 版本：2026-08-11  
 适用项目：真人武术/舞蹈视频 → Unitree G1 动作模仿  
-当前已验证平台：高校 AI 算力平台，RTX 4090 容器，共享 `/public/home/zhouyuqin` 存储
+当前已验证平台：高校 AI 算力平台，RTX 4090 容器，共享 `/public/home/<账号>` 存储（平台账号见群内说明，下同）
 
 ---
 
@@ -46,7 +46,7 @@
 GPU：RTX 4090 × 1
 CPU：5 核
 容器内存限制：15 GiB
-共享存储：/public/home/zhouyuqin
+共享存储：/public/home/<账号>
 SSH：开启
 ```
 
@@ -88,7 +88,7 @@ NVIDIA GeForce RTX 4090
 确认共享盘：
 
 ```bash
-ls -lah /public/home/zhouyuqin | head -50
+ls -lah /public/home/<账号> | head -50
 ```
 
 当前团队与主账号共用共享存储，因此可以直接复用现有 GVHMR 项目、模型权重和上传的 Python。
@@ -101,19 +101,19 @@ ls -lah /public/home/zhouyuqin | head -50
 
 ```text
 GVHMR 项目：
-/public/home/zhouyuqin/helloworld/upload/GVHMR
+/public/home/<账号>/helloworld/upload/GVHMR
 
 上传的 Python 3.10.20：
-/public/home/zhouyuqin/cpython-3.10.20-linux-x86_64-gnu/bin/python3.10
+/public/home/<账号>/cpython-3.10.20-linux-x86_64-gnu/bin/python3.10
 
 GVHMR 旧 venv 的包：
-/public/home/zhouyuqin/helloworld/upload/GVHMR/.venv/lib/python3.10/site-packages
+/public/home/<账号>/helloworld/upload/GVHMR/.venv/lib/python3.10/site-packages
 
 GVHMR checkpoints：
-/public/home/zhouyuqin/helloworld/upload/GVHMR/inputs/checkpoints
+/public/home/<账号>/helloworld/upload/GVHMR/inputs/checkpoints
 
 libGL stub 源文件：
-/public/home/zhouyuqin/helloworld/upload/gl_stub.c
+/public/home/<账号>/helloworld/upload/gl_stub.c
 ```
 
 当前 checkpoints 约 5.6G，包括：
@@ -168,7 +168,7 @@ cd /tmp
 
 gcc -shared -fPIC \
   -o libGL.so.1 \
-  /public/home/zhouyuqin/helloworld/upload/gl_stub.c
+  /public/home/<账号>/helloworld/upload/gl_stub.c
 ```
 
 检查：
@@ -184,9 +184,9 @@ ls -lh /tmp/libGL.so.1
 每次打开新 SSH/WebShell 终端，先执行：
 
 ```bash
-GV=/public/home/zhouyuqin/helloworld/upload/GVHMR
+GV=/public/home/<账号>/helloworld/upload/GVHMR
 
-export PATH=/public/home/zhouyuqin/cpython-3.10.20-linux-x86_64-gnu/bin:$PATH
+export PATH=/public/home/<账号>/cpython-3.10.20-linux-x86_64-gnu/bin:$PATH
 
 export PYTHONPATH="$GV:$GV/.venv/lib/python3.10/site-packages"
 
@@ -225,7 +225,7 @@ Python 3.10.20
 测试 OpenCV：
 
 ```bash
-cd /public/home/zhouyuqin/helloworld/upload/GVHMR
+cd /public/home/<账号>/helloworld/upload/GVHMR
 
 python3.10 -c "import cv2; print('cv2 OK', cv2.__version__)"
 ```
@@ -291,7 +291,7 @@ hmr4d_results.pt
 保留原版 `demo.py` 不动，复制一份：
 
 ```bash
-cd /public/home/zhouyuqin/helloworld/upload/GVHMR
+cd /public/home/<账号>/helloworld/upload/GVHMR
 
 cp tools/demo/demo.py tools/demo/demo_pt_only.py
 ```
@@ -380,7 +380,7 @@ ls -lh outputs/demo/team_test/hmr4d_results.pt
 可以创建：
 
 ```text
-/public/home/zhouyuqin/helloworld/upload/GVHMR/run_gvhmr.sh
+/public/home/<账号>/helloworld/upload/GVHMR/run_gvhmr.sh
 ```
 
 内容：
@@ -389,9 +389,9 @@ ls -lh outputs/demo/team_test/hmr4d_results.pt
 #!/usr/bin/env bash
 set -euo pipefail
 
-GV=/public/home/zhouyuqin/helloworld/upload/GVHMR
-PYROOT=/public/home/zhouyuqin/cpython-3.10.20-linux-x86_64-gnu
-GLSRC=/public/home/zhouyuqin/helloworld/upload/gl_stub.c
+GV=/public/home/<账号>/helloworld/upload/GVHMR
+PYROOT=/public/home/<账号>/cpython-3.10.20-linux-x86_64-gnu
+GLSRC=/public/home/<账号>/helloworld/upload/gl_stub.c
 
 if [ $# -lt 1 ]; then
   echo "用法: $0 <video.mp4> [static]"
@@ -650,8 +650,8 @@ ee threshold：0.45
 ## 19. 当前服务器工程
 
 ```bash
-PROJ=/public/home/zhouyuqin/helloworld/upload/mjlab_test/g1_spinkick_example
-UPLOAD=/public/home/zhouyuqin/helloworld/upload
+PROJ=/public/home/<账号>/helloworld/upload/mjlab_test/g1_spinkick_example
+UPLOAD=/public/home/<账号>/helloworld/upload
 TRAIN="$PROJ/.venv/bin/train"
 ```
 
@@ -666,7 +666,7 @@ Mjlab-Tracking-Flat-Unitree-G1
 ## 20. 标准服务器筛选命令
 
 ```bash
-PROJ=/public/home/zhouyuqin/helloworld/upload/mjlab_test/g1_spinkick_example
+PROJ=/public/home/<账号>/helloworld/upload/mjlab_test/g1_spinkick_example
 TRAIN="$PROJ/.venv/bin/train"
 
 cd "$PROJ"
@@ -1004,7 +1004,7 @@ cd /tmp
 
 gcc -shared -fPIC \
   -o libGL.so.1 \
-  /public/home/zhouyuqin/helloworld/upload/gl_stub.c
+  /public/home/<账号>/helloworld/upload/gl_stub.c
 
 export LD_LIBRARY_PATH=/tmp:${LD_LIBRARY_PATH:-}
 ```
@@ -1016,7 +1016,7 @@ export LD_LIBRARY_PATH=/tmp:${LD_LIBRARY_PATH:-}
 确保：
 
 ```bash
-GV=/public/home/zhouyuqin/helloworld/upload/GVHMR
+GV=/public/home/<账号>/helloworld/upload/GVHMR
 export PYTHONPATH="$GV:$GV/.venv/lib/python3.10/site-packages"
 ```
 
@@ -1029,7 +1029,7 @@ export PYTHONPATH="$GV:$GV/.venv/lib/python3.10/site-packages"
 使用：
 
 ```bash
-export PATH=/public/home/zhouyuqin/cpython-3.10.20-linux-x86_64-gnu/bin:$PATH
+export PATH=/public/home/<账号>/cpython-3.10.20-linux-x86_64-gnu/bin:$PATH
 python3.10 ...
 ```
 
